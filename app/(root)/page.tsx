@@ -1,8 +1,9 @@
 import HeaderBox from '@/components/HeaderBox';
+import RightSidebar from '@/components/RightSidebar';
 import TotalBalanceBox from '@/components/TotalBalanceBox';
 
 const Home = async () => {
-  const loggedIn = { firstName: 'Roberto', lastName: 'Baños', email: 'roberto.banos@gmail.com' };
+  const loggedIn = { firstName: 'Roberto', lastName: 'Baños', email: 'roberto.banos@gmail.com' } as User;
   const accounts = {
     data: [
       { name: 'Plaid Checking', currentBalance: 1250.12, mask: '1111' },
@@ -10,11 +11,12 @@ const Home = async () => {
       { name: 'Plaid Credit', currentBalance: 3750.36, mask: '3333' }
     ],
     totalBanks: 0,
-    totalCurrentBalance: 0
+    totalCurrentBalance: 0,
+    transactions: []
   };
-  const accountsData = accounts?.data as Account[];
+  const accountsData = accounts?.data as Bank[] & Account[];
   accounts.totalBanks = accountsData.length;
-  accounts.totalCurrentBalance = accountsData?.reduce((accumulator, currentValue) => accumulator + currentValue.currentBalance, 0);
+  accounts.totalCurrentBalance = accounts?.data?.reduce((accumulator, currentValue) => accumulator + currentValue.currentBalance, 0);
 
   return (
     <section className='home'>
@@ -33,6 +35,12 @@ const Home = async () => {
           />
         </header>
       </div>
+
+      <RightSidebar
+        user={loggedIn}
+        transactions={accounts?.transactions}
+        banks={accountsData.slice(0, 2)}
+      />
     </section>
   )
 }
