@@ -1,9 +1,12 @@
 import HeaderBox from '@/components/HeaderBox';
 import RightSidebar from '@/components/RightSidebar';
 import TotalBalanceBox from '@/components/TotalBalanceBox';
+import { getLoggedInUser } from '@/lib/actions/user.actions';
 
 const Home = async () => {
-  const loggedIn = { firstName: 'Roberto', lastName: 'Baños', email: 'roberto.banos@gmail.com' } as User;
+  const loggedIn = await getLoggedInUser();
+  if (!loggedIn) return;
+
   const accounts = {
     data: [
       { name: 'Plaid Checking', currentBalance: 1250.12, mask: '1111' },

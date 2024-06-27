@@ -1,8 +1,8 @@
 'use server';
 
 import { cookies } from 'next/headers';
-import { ID } from 'node-appwrite';
-import { createAdminClient } from '../appwrite';
+import { ID, Query } from 'node-appwrite';
+import { createAdminClient, createSessionClient } from '../appwrite';
 import { parseStringify } from '../utils';
 
 const {
@@ -48,6 +48,35 @@ export const signUp = async ({ password, ...userData }: SignUpParams) => {
     });
 
     return parseStringify(newUser)
+  } catch (error) {
+    console.error('Error', error);
+  }
+}
+
+export async function getLoggedInUser() {
+  try {
+    const { account } = await createSessionClient();
+    const result = await account.get();
+
+    const user = await getUserInfo({ userId: result.$id })
+
+    return parseStringify(user);
+  } catch (error: any) {
+    if (error.message !== 'No session') console.error('Error', error);
+    return null;
+  }
+}
+
+export const getUserInfo = async ({ userId }: getUserInfoProps) => {
+  try {
+    const { database } = await createAdminClient();
+
+    const user = await database.listDocuments(
+      DATABASE_ID!,
+      USER_COLLECTION_ID!,
+      [Query.equal('userId', [userId])]
+    )
+    return parseStringify(user.documents[0]);
   } catch (error) {
     console.error('Error', error);
   }
