@@ -81,3 +81,15 @@ export const getUserInfo = async ({ userId }: getUserInfoProps) => {
     console.error('Error', error);
   }
 }
+
+export const signOut = async () => {
+  try {
+    const { account } = await createSessionClient();
+
+    cookies().delete('appwrite-bankify-session');
+
+    await account.deleteSession('current');
+  } catch (error) {
+    return null;
+  }
+}
