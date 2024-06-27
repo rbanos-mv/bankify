@@ -12,6 +12,7 @@ import { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import CustomInput from './CustomInput';
+import PlaidLink from './PlaidLink';
 
 const AuthForm = ({ type }: { type: string }) => {
   const router = useRouter();
@@ -96,7 +97,7 @@ const AuthForm = ({ type }: { type: string }) => {
       {user
         ? (
           <div className="flex flex-col gap-4">
-            {/* PlaidLink */}
+            <PlaidLink user={user} variant='primary' />
           </div>
         )
         : (
