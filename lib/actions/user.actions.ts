@@ -93,3 +93,23 @@ export const signOut = async () => {
     return null;
   }
 }
+
+export const signIn = async ({ email, password }: signInProps) => {
+  try {
+    const { account } = await createAdminClient();
+    const session = await account.createEmailPasswordSession(email, password);
+
+    cookies().set("appwrite-bankify-session", session.secret, {
+      path: "/",
+      httpOnly: true,
+      sameSite: "strict",
+      secure: true,
+    });
+
+    const user = await getUserInfo({ userId: session.userId });
+
+    return parseStringify(user);
+  } catch (error) {
+    console.error('Error', error);
+  }
+}
