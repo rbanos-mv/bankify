@@ -52,7 +52,7 @@ const PlaidLink = ({ user, variant }: PlaidLinkProps) => {
           </Button>)
           : variant === 'mobile-nav'
             ? (<Link
-              href={'javascript:void(0)'}
+              href='#'
               onClick={() => open()}
               key={'connect bank'}
               className={cn('mobilenav-sheet_close w-full', { 'bg-bank-gradient': false })}
@@ -69,7 +69,7 @@ const PlaidLink = ({ user, variant }: PlaidLinkProps) => {
               </p>
             </Link>)
             : (<Link
-              href={'javascript:void(0)'}
+              href='#'
               onClick={() => open()}
               key={'connect bank'}
               className={cn('sidebar-link', { 'bg-bank-gradient': false })}
@@ -86,15 +86,6 @@ const PlaidLink = ({ user, variant }: PlaidLinkProps) => {
                 Connect Bank
               </p>
             </Link>)
-        // <Button onClick={() => open()} disabled={!ready} className='plaidlink-default'>
-        //   <Image
-        //     src='/icons/connect-bank.svg'
-        //     alt='connect bank'
-        //     height={24}
-        //     width={24}
-        //   />
-        //   <p className='text-[16px] font-semibold text-black-2'>Connect Bank</p>
-        // </Button>
       }
     </>
   )
