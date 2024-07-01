@@ -25,11 +25,12 @@ const Category = ({ category }: CategoryProps) => {
         </div>
         <Progress
           value={(category.count / category.totalCount) * 100}
-          className={cn("h-2 w-full", progressBg) + '|' + cn("h-2 w-full", indicator)}
+          className={cn("h-2 w-full", progressBg)}
+          indicatorClassName={cn("h-2 w-full", indicator)}
         />
       </div>
     </div>
   );
-}
+};
 
-export default Category
+export default Category;
